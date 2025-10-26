@@ -15,7 +15,6 @@ bitfield = "0.19"
 chrono = { version = "0.4", optional = true, default-features = false }
 deasync = "0.1"
 derive_more = { version = "2.0", features = ["display", "from", "into"] }
-displaydoc = { version = "0.2", default-features = false }
 heapless = "0.9"
 hex-literal = "1.0"
 log = "0.4"
