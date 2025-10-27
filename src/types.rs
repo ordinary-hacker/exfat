@@ -1,7 +1,23 @@
-use derive_more::{Display, From, Into};
-
-#[derive(Copy, Clone, Debug, Default, Display, From, Into, Eq, Ord, PartialOrd, PartialEq)]
+#[derive(Copy, Clone, Debug, Default, Eq, Ord, PartialOrd, PartialEq)]
 pub struct SectorID(u64);
+
+impl core::fmt::Display for SectorID {
+    fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
+        write!(f, "{}", self.0)
+    }
+}
+
+impl From<u64> for SectorID {
+    fn from(value: u64) -> Self {
+        Self(value)
+    }
+}
+
+impl From<SectorID> for u64 {
+    fn from(value: SectorID) -> Self {
+        value.0
+    }
+}
 
 impl<I: Into<u64>> core::ops::Add<I> for SectorID {
     type Output = Self;
@@ -17,8 +33,26 @@ impl<I: Into<u64>> core::ops::AddAssign<I> for SectorID {
     }
 }
 
-#[derive(Copy, Clone, Debug, Default, Display, From, Into, Eq, Ord, PartialOrd, PartialEq)]
+#[derive(Copy, Clone, Debug, Default, Eq, Ord, PartialOrd, PartialEq)]
 pub struct ClusterID(u32);
+
+impl core::fmt::Display for ClusterID {
+    fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
+        write!(f, "{}", self.0)
+    }
+}
+
+impl From<u32> for ClusterID {
+    fn from(value: u32) -> Self {
+        Self(value)
+    }
+}
+
+impl From<ClusterID> for u32 {
+    fn from(value: ClusterID) -> Self {
+        value.0
+    }
+}
 
 impl ClusterID {
     pub fn valid(&self) -> bool {

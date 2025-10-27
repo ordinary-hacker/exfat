@@ -3,13 +3,11 @@ use bitfield::bitfield;
 use chrono::Local;
 #[cfg(feature = "chrono")]
 use chrono::{Datelike, FixedOffset, NaiveDate, NaiveDateTime, NaiveTime, Timelike};
-use derive_more::Into;
-
 use super::super::entry_type::{EntryType, RawEntryType};
 use crate::endian::Little as LE;
 
 bitfield! {
-    #[derive(Copy, Clone, Debug, Default, Into)]
+    #[derive(Copy, Clone, Debug, Default)]
     pub struct Timestamp(u32);
     year_offset, set_year_offset: 31, 25;
     pub month, set_month: 24, 21;
@@ -17,6 +15,12 @@ bitfield! {
     pub hour, set_hour: 15, 11;
     pub minute, set_minute: 10, 5;
     pub double_second, set_double_second: 4, 0;
+}
+
+impl From<Timestamp> for u32 {
+    fn from(value: Timestamp) -> Self {
+        value.0
+    }
 }
 
 impl Timestamp {
@@ -71,13 +75,19 @@ impl Timestamp {
 }
 
 bitfield! {
-    #[derive(Copy, Clone, Default, Debug, Into)]
+    #[derive(Copy, Clone, Default, Debug)]
     pub struct FileAttributes(u16);
     pub read_only, set_read_only: 0, 0;
     pub hidden, set_hidden: 1, 1;
     pub system, set_system: 2, 2;
     pub directory, set_directory: 4, 4;
     pub archive, set_archive: 5, 5;
+}
+
+impl From<FileAttributes> for u16 {
+    fn from(value: FileAttributes) -> Self {
+        value.0
+    }
 }
 
 impl FileAttributes {
